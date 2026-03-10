@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ckb">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTI KURDISH | نـۆڵـڤ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;500;800&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --primary: #1a1a1a; 
+            --accent: #ff4d4d; 
+            --cyan: #00f2ff; 
+            --tiktok: #ff0050;
+            --telegram: #0088cc;
+        }
+        
+        * { box-sizing: border-box; font-family: 'Vazirmatn', sans-serif; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        body { 
+            margin: 0; 
+            background: linear-gradient(135deg, #4b0000, #1a0b2e, #0b1a2e, #0b2e21, #2e1a0b, #4b0000);
+            background-size: 400% 400%; 
+            animation: rainbowMove 12s ease infinite;
+            color: #fff; 
+            min-height: 100vh; 
+            scroll-behavior: smooth;
+        }
+
+        @keyframes rainbowMove { 
+            0% { background-position: 0% 50%; } 
+            50% { background-position: 100% 50%; } 
+            100% { background-position: 0% 50%; } 
+        }
+
+        .container { max-width: 550px; margin: 0 auto; padding: 20px; text-align: center; }
+
+        .contact-section {
+            margin: 25px 0;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .contact-text { font-size: 0.95rem; margin-bottom: 12px; font-weight: 500; color: #eee; }
+        .btn-group { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        
+        .btn-social {
+            padding: 8px 18px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: white;
+            font-weight: 800;
+            font-size: 0.85rem;
+            transition: 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .btn-tk { background: var(--tiktok); }
+        .btn-tg { background: var(--telegram); }
+        .btn-social:hover { transform: translateY(-3px); filter: brightness(1.2); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+
+        .q-card { 
+            background: rgba(0, 0, 0, 0.6); 
+            backdrop-filter: blur(8px);
+            padding: 30px 15px; 
+            border-radius: 20px; 
+            margin-bottom: 25px; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+        }
+        .answered { border-color: var(--cyan); opacity: 0.5; transform: scale(0.98); }
+
+        .q-text { font-size: 1.15rem; font-weight: 800; margin-bottom: 20px; line-height: 1.6; }
+        .options { display: flex; justify-content: center; align-items: center; direction: ltr; gap: 6px; }
+        .circle { border: 2px solid #555; cursor: pointer; border-radius: 50%; }
+        .s3 { width: 42px; height: 42px; } .s2 { width: 32px; height: 32px; } .s1 { width: 24px; height: 24px; }
+        .neutral { width: 18px; height: 18px; background: #666; border: none; }
+
+        .btn { 
+            background: linear-gradient(45deg, #222, #444); 
+            color: white; 
+            border: 1px solid var(--cyan); 
+            padding: 14px 35px; 
+            cursor: pointer; 
+            border-radius: 50px; 
+            font-size: 1rem; 
+            font-weight: 800; 
+        }
+        .btn:hover { background: var(--cyan); color: #000; box-shadow: 0 0 20px var(--cyan); }
+
+        .progress-bar { position: fixed; top: 0; left: 0; height: 6px; background: var(--cyan); z-index: 1001; width: 0%; box-shadow: 0 0 10px var(--cyan); }
+        .bar-outer { height: 14px; background: #111; border-radius: 10px; display: flex; direction: ltr; overflow: hidden; margin: 10px 0 20px; border: 1px solid #333; }
+        .description-box { background: rgba(255, 255, 255, 0.07); padding: 20px; border-radius: 15px; margin-top: 20px; line-height: 1.8; text-align: justify; border-right: 4px solid var(--cyan); }
+    </style>
+</head>
+<body>
+
+<div class="progress-bar" id="pBar"></div>
+
+<div class="container">
+    
+    <div id="start-box">
+        <h1 style="font-size: 3.2rem; background: linear-gradient(to right, #00f2ff, #ff4d4d); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 40px 0 10px; font-weight: 800;">MBTI KURDISH</h1>
+        <p style="margin-bottom: 30px; font-size: 1.1rem; color: #ccc;">تێستی کەسایەتی بە زمانی کوردی</p>
+        <button class="btn" onclick="startTest()">دەستپێکردن</button>
+        <div class="contact-section">
+            <div class="contact-text">ئەم پەڕەیە لەلایەن <b>نـۆڵـڤ</b> دروستکراوە:</div>
+            <div class="btn-group">
+                <a href="https://tiktok.com/@YuseriTiktok" target="_blank" class="btn-social btn-tk">TikTok</a>
+                <a href="https://t.me/YuseriTelegram" target="_blank" class="btn-social btn-tg">Telegram</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="quiz-box" style="display:none;">
+        <h2 id="stage-info" style="color: var(--cyan); margin-bottom: 25px; font-weight: 800;"></h2>
+        <div id="q-container"></div>
+        
+        <div style="margin: 30px 0; display: flex; justify-content: center; gap: 10px;">
+            <button class="btn" style="background:#333; border:none;" onclick="prevStage()">گەڕانەوە</button>
+            <button class="btn" id="nextBtn" onclick="handleNext()">بەشی داهاتوو</button>
+        </div>
+
+        <div class="contact-section">
+            <div class="contact-text">ئەم پەڕەیە لەلایەن <b>نـۆڵـڤ</b> دروستکراوە:</div>
+            <div class="btn-group">
+                <a href="https://tiktok.com/@YuseriTiktok" target="_blank" class="btn-social btn-tk">TikTok</a>
+                <a href="https://t.me/YuseriTelegram" target="_blank" class="btn-social btn-tg">Telegram</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="result-box" style="display:none;">
+        <h1 id="res-code" style="font-size: 4.5rem; margin: 10px 0; background: linear-gradient(to bottom, #fff, #00f2ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800;"></h1>
+        <h2 id="res-name" style="color: var(--cyan); margin-bottom: 25px; font-size: 2.2rem;"></h2>
+        <div id="res-stats"></div>
+        <div id="res-desc" class="description-box"></div>
+        
+        <div class="contact-section">
+            <div class="contact-text">بۆ هەر کێشەیەک یان تێبینیەک نامە بۆ <b>نـۆڵـڤ</b> بنێرە:</div>
+            <div class="btn-group">
+                <a href="https://tiktok.com/@YuseriTiktok" target="_blank" class="btn-social btn-tk">TikTok</a>
+                <a href="https://t.me/YuseriTelegram" target="_blank" class="btn-social btn-tg">Telegram</a>
+            </div>
+        </div>
+        <button class="btn" style="margin: 20px 0; width: 100%;" onclick="location.reload()">دووبارە تاقیکردنەوە</button>
+    </div>
+</div>
+
+<script>
+    // لیستی پرسیارەکان... (هەمان لیستە بەبێ گۆڕانکاری)
+    const questions = [
+        {q: "لە ناو کۆمەڵدا هەست بە وزە و چالاکی دەکەم", v: "E"},
+        {q: "حەز دەکەم کاتەکانم لەگەڵ هاوڕێکانم بەسەر ببەرم نەک بە تەنیا", v: "E"},
+        {q: "ناسینی کەسانی نوێ بۆ من کارێکی ئاسان و خۆشە", v: "E"},
+        {q: "لە ناو کۆڕ و مەجلیسدا من زیاتر قسە دەکەم و دەستپێشخەرم", v: "E"},
+        {q: "حەز دەکەم لە ناوەڕاستی سەرنجی خەڵکدا بم", v: "E"},
+        {q: "بیرۆکەکانم بە دەنگی بەرز لەگەڵ کەسانی تر باس دەکەم", v: "E"},
+        {q: "پاش بەسەربردنی کاتێکی زۆر لەگەڵ خەڵک هەست بە شادی دەکەم", v: "E"},
+        {q: "تەلەفۆن کردن بۆ من ئاسانترە لە نامە نووسین", v: "E"},
+        {q: "حەز دەکەم لە جێگەی قەرەباڵغ و پڕ لە جووڵە بم", v: "E"},
+        {q: "زۆربەی کات پێش ئەوەی بیر بکەمەوە قسە دەکەم", v: "E"},
+        {q: "کاتێک تەنیا دەبم هەست بە بێزاری یان بێتاقەتی دەکەم", v: "E"},
+        {q: "بازنەی هاوڕێیەتییم فراوانە", v: "E"},
+        {q: "بۆ من ئاسانە بابەتێکی نوێ لەگەڵ کەسێکی نامۆ دەست پێ بکەم", v: "E"},
+        {q: "لە شوێنی کار یان خوێندن حەز دەکەم بە گرووپ کار بکەم", v: "E"},
+        {q: "حەزم بەو چالاکییانەیە کە بەژداری زۆر کەسی تێدایە", v: "E"},
+        {q: "کاتێک کێشەیەکم هەیە حەز دەکەم لەگەڵ کەسێک باسی بکەم", v: "E"},
+        {q: "لە بۆنە و ئاهەنگەکاندا تا درەنگ دەمێنمەوە و چێژ وەردەگرم", v: "E"},
+        {q: "حەز دەکەم دەوروبەرم پڕ بێت لە دەنگ و جووڵە", v: "E"},
+        {q: "قسە لەگەڵ کەسانی نامۆ دەکەم کاتێک لە شوێنێکی گشتیدا چاوەڕێ دەکەم", v: "E"},
+        {q: "حەز دەکەم خەڵک دەربارەی ژیان و کارەکانم بزانن", v: "E"},
+        {q: "وزەی من لە جیهانی دەرەوە دێت نەک لەناو مێشکمدا", v: "E"},
+        {q: "من زیاتر سەرنجم لەسەر ئەو شتانەیە کە ئێستا ڕوودەدەن", v: "S"},
+        {q: "حەزم بە زانیارییەکی ڕوونە کە بتوانم بیبینم و دەستی لێ بدەم", v: "S"},
+        {q: "حەز دەکەم فێری شتێک ببم کە یەکسەر سوودی هەبێت", v: "S"},
+        {q: "من کەسێکی پراکتیکیم و حەزم بە واقیعە", v: "S"},
+        {q: "پێم باشە کارەکان بەو شێوەیە بکەم کە پێشتر تاقی کراوەتەوە", v: "S"},
+        {q: "حەزم بە وردەکارییە و بە وردی سەیری شتەکان دەکەم", v: "S"},
+        {q: "زیاتر متمانە بە ئەزموونی خۆم دەکەم نەک بە هەست", v: "S"},
+        {q: "حەزم بەو ڕێنماییانەیە کە خاڵ بە خاڵ بۆم نووسراوە", v: "S"},
+        {q: "من زیاتر سەرنجم لەسەر ڕاستییەکانە نەک ئەگەرەکان", v: "S"},
+        {q: "حەزم بە کارکردنە بە دەست و کەرەستەی فیزیکی", v: "S"},
+        {q: "زیاتر حەزم بە زانینی (چۆن و کەی) شتەکانە نەک (بۆچی)", v: "S"},
+        {q: "من زیاتر وەک کەسێکی عاقڵ و واقیعی دەبینرێم", v: "S"},
+        {q: "حەزم بە فێربوونی شتی ڕاستەقینەیە نەک تۆری ئاڵۆز", v: "S"},
+        {q: "زۆرجار غەرق دەبم لە ناو خەیاڵ و بیرکردنەوەکانم", v: "N"},
+        {q: "حەزم بە بیرۆکەی نوێ و جیاوازە تەنانەت ئەگەر سەیر بن", v: "N"},
+        {q: "هەمیشە وێنە گەورەکە دەبینم نەک تەنها بەشە بچووکەکان", v: "N"},
+        {q: "زیاتر بەدوای مانا شاراوەکاندا دەگەڕێم لە ناو شتەکاندا", v: "N"},
+        {q: "حەزم بە خوێندنەوەی بابەتە فەلسەفییەکانە", v: "N"},
+        {q: "زۆرجار بە هەستی ناوەوەم بڕیار دەدەم", v: "N"},
+        {q: "حەز دەکەم ڕێگەی نوێ تاقی بکەمەوە بۆ کارکردن", v: "N"},
+        {q: "من زیاتر خەیاڵاویم و هەمیشە بیر لە داهاتوو دەکەمەوە", v: "N"},
+        {q: "حەزم بە دۆزینەوەی پەیوەندی نێوان شتە جیاوازەکانە", v: "N"},
+        {q: "من زیاتر گرنگی بەوە دەدەم کە لە داهاتوو چی ڕوودەدات", v: "N"},
+        {q: "حەزم بە پێشبینیکردن و گەڕانە بەدوای شتی نوێدا", v: "N"},
+        {q: "من زۆر زوو لە ڕۆتین و شتی دووبارە بێزار دەبم", v: "N"},
+        {q: "زۆرجار وشەی (لەوانەیە) و (ئەگەر) زۆر بەکاردێنم", v: "N"},
+        {q: "لە کاتی بڕیاردان عەقڵم دەخەمە پێش هەستم", v: "T"},
+        {q: "پێم باشترە ڕاستگۆ بم، گرینگ نیە خەڵک هەستی چۆن دەبێت", v: "T"},
+        {q: "لۆژیک و بەڵگە بۆ من لە هەموو شتێک گرنگترن", v: "T"},
+        {q: "کاتێک بڕیار دەدەم تەنها سەیری ڕاستییەکان دەکەم", v: "T"},
+        {q: "لە کاتی کێشەدا حەز دەکەم بزانم کێ خەتابارە", v: "T"},
+        {q: "حەز دەکەم یاسا بۆ هەمووان وەک یەک بێت", v: "T"},
+        {q: "ڕەخنەگرتن بە کارێکی پێویست دەبینم بۆ سەرکەوتن", v: "T"},
+        {q: "زیاتر سەیری ئەنجامی کارەکە دەکەم نەک ماندووبوونی کەسەکە", v: "T"},
+        {q: "پێم باشە مرۆڤێکی بەهێز بم نەک مرۆڤێکی ناسک", v: "T"},
+        {q: "لە مشتومڕدا حەز دەکەم ڕاستییەکە بسەلمێنم", v: "T"},
+        {q: "هەڵەی کارەکان زوو دەبینم و بێدەنگ نابم", v: "T"},
+        {q: "دادپەروەری بۆ من لە میهرەبانی گرنگترە", v: "T"},
+        {q: "هەستی کەسانی تر لای من زۆر گرنگە", v: "F"},
+        {q: "پێم باشە هەمووان لێم ڕازی بن و دڵیان نەیەشێت", v: "F"},
+        {q: "لە بڕیارداندا ڕەچاوی هەستی دەوروبەرم دەکەم", v: "F"},
+        {q: "حەز دەکەم لە ناو خەڵکدا ئاشتی و تەبایی هەبێت", v: "F"},
+        {q: "من زیاتر بە دڵم بڕیار دەدەم نەک بە مێشکم", v: "F"},
+        {q: "حەز دەکەم هاوکاری خەڵک بکەم و گوێ لە خەمەکانیان بگرم", v: "F"},
+        {q: "میهرەبانی و بەزەیی لای من لە هەموو شتێک گرنگترە", v: "F"},
+        {q: "زۆر زوو بە قسەی خەڵک کاریگەر دەبم", v: "F"},
+        {q: "حەز ناکەم دڵی کەس بێشێنم تەنانەت ئەگەر هەڵەش بن", v: "F"},
+        {q: "کاتێک بڕیار دەدەم بیر لە لایەنە مرۆییەکان دەکەمەوە", v: "F"},
+        {q: "پێم باشە مرۆڤێکی بەسۆز بم نەک مرۆڤێکی ڕەق", v: "F"},
+        {q: "هەمیشە هەوڵ دەدەم هاوڕێکانم لە خۆم ڕازی بکەم", v: "F"},
+        {q: "حەز دەکەم هەموو کارەکانم پێشوەختە پلان بۆ داڕێژراو بێت", v: "J"},
+        {q: "پێم باشە بەرنامەی ڕۆژانەم هەبێت و پێوەی پابەند بم", v: "J"},
+        {q: "کاتێک بڕیارێکم دا ئیتر نایگۆڕم و جێبەجێی دەکەم", v: "J"},
+        {q: "ژوورەکەم و شوێنی کارەکەم هەمیشە ڕێکخراو و خاوێنە", v: "J"},
+        {q: "حەز دەکەم کارەکانم زوو تەواو بکەم و نەیانهێڵمەوە بۆ کاتی کۆتایی", v: "J"},
+        {q: "پێش ئەوەی بچمە سەفەر هەموو وردەکارییەکان ڕێک دەخەم", v: "J"},
+        {q: "لیستێکی تایبەتم هەیە بۆ ئەو کارانەی دەبێت ئەنجامیان بدەم", v: "J"},
+        {q: "حەزم بە یاسا و ڕێساکانە و حەز دەکەم پەیڕەویان بکەم", v: "J"},
+        {q: "کات بۆ خوودی خۆم زۆر گرنگە", v: "J"},
+        {q: "حەز دەکەم کارەکانم بە ڕێکوپێکی و خاڵ بە خاڵ بڕۆن بەڕێوە", v: "J"},
+        {q: "کاتێک کارێکی کتوپڕ دێتە پێش مێشکم تێک دەچێت", v: "J"},
+        {q: "حەزم بە ژیانێکی جێگیرە و حەز بە سوپرایز ناکەم", v: "J"},
+        {q: "من حەز دەکەم بژاردەکانم کراوە بن و بڕیاری کۆتایی نەدەم", v: "P"},
+        {q: "حەزم بە گۆڕانکاری کتوپڕە و پلانی توندومۆڵم ناوێت", v: "P"},
+        {q: "لەژێر پەستانی کاتدا باشتر کار دەکەم و کارەکان دەهێڵمەوە بۆ کۆتایی", v: "P"},
+        {q: "حەز دەکەم بەپێی بارودۆخەکە ڕەفتار بکەم نەک بەپێی پلان", v: "P"},
+        {q: "بۆ من ئاسانە کە لە نیوەی ڕێگەدا پلانەکەم بگۆڕم", v: "P"},
+        {q: "حەزم بە تاقیکردنەوەی شتی نوێیە و ڕقم لە ڕۆتینە", v: "P"},
+        {q: "زۆرجار وشەی (لەوانەیە) و (ئەگەر) زۆر بەکاردێنم", v: "P"},
+        {q: "حەز دەکەم ئازاد بم و هەر کاتێک چیم پێ خۆش بوو ئەوە بکەم", v: "P"},
+        {q: "من کەسێکی سەرکێشم و حەزم بە شتی کتوپڕ و نەخشە بۆ نەکێشراوە", v: "P"},
+        {q: "پێم باشە لە کاتی کارکردندا یاری و کات بەسەربردنیش هەبێت", v: "P"}
+    ];
+
+    let currentStage = 0; let answers = {}; const stageSize = 24;
+
+    function startTest() { document.getElementById('start-box').style.display='none'; document.getElementById('quiz-box').style.display='block'; showStage(); }
+
+    function showStage() {
+        const container = document.getElementById('q-container'); container.innerHTML = "";
+        const start = currentStage * stageSize; const end = Math.min(start + stageSize, questions.length);
+        
+        // چاککردنی ژمارەکان بۆ ئینگلیزی
+        if(currentStage === 3) {
+            document.getElementById('stage-info').innerText = "کـۆتـابـەش";
+            document.getElementById('nextBtn').innerText = "وەرگرتنەوەی ئەنجام";
+        } else {
+            document.getElementById('stage-info').innerText = "بەشی " + (currentStage + 1) + " لە 4";
+            document.getElementById('nextBtn').innerText = "بەشی داهاتوو";
+        }
+
+        for (let i = start; i < end; i++) {
+            container.innerHTML += `
+                <div class="q-card ${answers[i] !== undefined ? 'answered' : ''}" id="q-${i}">
+                    <div class="q-text">${questions[i].q}</div>
+                    <div class="options">
+                        <span style="color:#ff4d4d; font-weight:800">نا</span>
+                        <div class="circle s3" onclick="pick(${i},-3)"></div>
+                        <div class="circle s2" onclick="pick(${i},-2)"></div>
+                        <div class="circle s1" onclick="pick(${i},-1)"></div>
+                        <div class="circle neutral" onclick="pick(${i},0)"></div>
+                        <div class="circle s1" onclick="pick(${i},1)"></div>
+                        <div class="circle s2" onclick="pick(${i},2)"></div>
+                        <div class="circle s3" onclick="pick(${i},3)"></div>
+                        <span style="color:var(--cyan); font-weight:800">بەڵێ</span>
+                    </div>
+                </div>
+            `;
+            if(answers[i] !== undefined) updateUI(i, answers[i]);
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' }); updateProgress();
+    }
+
+    function pick(id, val) {
+        answers[id] = val; updateUI(id, val);
+        document.getElementById(`q-${id}`).classList.add('answered');
+        const nextQ = document.getElementById(`q-${id+1}`);
+        if(nextQ) setTimeout(() => nextQ.scrollIntoView({ behavior: 'smooth', block: 'center' }), 250);
+    }
+
+    function updateUI(id, val) {
+        const dots = document.querySelectorAll(`#q-${id} .circle`);
+        dots.forEach(d => { d.style.background = "none"; d.style.borderColor = "#555"; });
+        let idx = val === 0 ? 3 : (val < 0 ? 3+val : 3+val);
+        let color = val < 0 ? "#ff4d4d" : (val > 0 ? "#00f2ff" : "#888");
+        dots[idx].style.background = color; dots[idx].style.borderColor = color;
+    }
+
+    function handleNext() {
+        const start = currentStage * stageSize; const end = Math.min(start + stageSize, questions.length);
+        for(let i=start; i<end; i++) { if(answers[i] === undefined) { alert("تکایە هەموو پرسیارەکان وەڵام بدەوە"); return; } }
+        if (currentStage < 3) { currentStage++; showStage(); } else { calculate(); }
+    }
+
+    function prevStage() { if (currentStage > 0) { currentStage--; showStage(); } }
+    function updateProgress() { document.getElementById('pBar').style.width = ((currentStage + 1) / 4 * 100) + "%"; }
+
+    function calculate() {
+        let sc = {E:0, I:0, S:0, N:0, T:0, F:0, J:0, P:0};
+        questions.forEach((q, i) => {
+            let v = answers[i], t = q.v;
+            let op = {E:'I', S:'N', T:'F', J:'P', I:'E', N:'S', F:'T', P:'J'}[t];
+            if(v > 0) sc[t] += v; else if(v < 0) sc[op] += Math.abs(v);
+        });
+
+        const pct = (a, b) => Math.round((sc[a] / (sc[a] + sc[b] || 1)) * 100);
+        const r = { E:pct('E','I'), I:pct('I','E'), S:pct('S','N'), N:pct('N','S'), T:pct('T','F'), F:pct('F','T'), J:pct('J','P'), P:pct('P','J') };
+        const type = (r.E>=50?'E':'I')+(r.S>=50?'S':'N')+(r.T>=50?'T':'F')+(r.J>=50?'J':'P');
+        const suffix = Math.random() > 0.5 ? "-A" : "-T";
+
+        const names = {"INTJ":"تەلارساز","INTP":"لۆژیکزان","ENTJ":"فەرماندە","ENTP":"مشتومڕکەر","INFJ":"پێشەوا","INFP":"نێوەندگیر","ENFJ":"پاڵەوان","ENFP":"هاندەر","ISTJ":"پشکنەر","ISFJ":"پارێزەر","ESTJ":"بەڕێوەبەر","ESFJ":"کونسوڵ","ISTP":"هونەرمەند","ISFP":"سەرکێشیکەر","ESTP":"خاوەنکار","ESFP":"نمایشکار"};
+        const descs = {
+            "INTJ": "تۆ کەسێکی ستراتیژی و وردبینی، هەمیشە پلانێکی درێژخایەنت هەیە و حەزت بە کارکردنی سەربەخۆیە.",
+            "INTP": "تۆ بیرکەرەوەیەکی لۆژیکی و داهێنەری، هەمیشە بەدوای زانیاری نوێ و تێگەیشتن لە چۆنیەتی کارکردنی شتەکاندا دەگەڕێیت.",
+            "ENTJ": "تۆ سەرکردەیەکی بەهێزی، زۆر باشیت لە ڕێکخستنی کارەکان و گەیشتن بە ئامانجە گەورەکان بە کەمترین کات.",
+            "ENTP": "تۆ کەسێکی زیرەک و مشتومڕکەری، حەزت بە بەرەنگاربوونەوەی فیکری هەیە و هەمیشە بیرۆکەی نوێت لایە.",
+            "INFJ": "تۆ پێشەوایەکی ئارام و خاوەن باوەڕیت، هەمیشە بەدوای مانا قووڵەکاندا دەگەڕێیت و دەتەوێت جیهان باشتر بکەیت.",
+            "INFP": "تۆ کەسێکی بەسۆز و میهرەبانی، زۆر دڵسۆزیت بۆ بەهاکانت و هەمیشە هەوڵ دەدەیت یارمەتی دەوروبەرت بدەیت.",
+            "ENFJ": "تۆ کەسێکی خاوەن کاریزما و کاریگەریت، زۆر باشیت لە تێگەیشتن لە هەستی کەسانی تر و هاندانیان بۆ سەرکەوتن.",
+            "ENFP": "تۆ وزەیەکی زۆرت هەیە و گەشبینیت، هەمیشە ئەگەرە نوێیەکان دەبینیت و حەزت بە ژیانی پڕ لە جۆراوجۆرییە.",
+            "ISTJ": "تۆ کەسێکی ڕاستگۆ و بەرپرسیاری، زۆر گرنگی بە وردەکاری و یاساکان دەدەیت و کارەکانت بە ڕێکوپێکی تەواو دەکەت.",
+            "ISFJ": "تۆ پارێزەرێکی دڵسۆز و میهرەبانی، هەمیشە ئامادەیت بۆ خزمەتکردنی ئەوانەی خۆشت دەوێن و پاراستنی ئارامی.",
+            "ESTJ": "تۆ بەڕێوەبەرێکی کارای، حەزت بە ڕێکخستن و جێبەجێکردنی یاساکانە و زۆر باشیت لە سەرپەرشتیکردنی خەڵک.",
+            "ESFJ": "تۆ کەسێکی یارمەتیدەر و کۆمەڵایەتیت، حەز دەکەت لە ناو خەڵکدا بیت و هەمیشە هەوڵی دروستکردنی تەبایی دەدەیت.",
+            "ISTP": "تۆ هونەرمەندێکی دەستڕەنگین و لۆژیکیت، حەزت بە چارەسەرکردنی کێشە پراکتیکییەکان و تاقیکردنەوەی شتی نوێیە.",
+            "ISFP": "تۆ کەسێکی هونەری و نەرمونیانیت، حەزت بە چێژوەرگرتنە لە ساتەکان و دۆزینەوەی جوانی لە دەوروبەرتدا.",
+            "ESTP": "تۆ کەسێکی پڕ لە وزە و سەرکێشیت، حەزت بە چالاکی خێرا و بڕیاردانی کتوپڕە و زۆر باشیت لە کارکردن لە ناو واقیعدا.",
+            "ESFP": "تۆ نمایشکارێکی دڵخۆشکەریت، ژیان لای تۆ ئاهەنگە و هەمیشە دەتوانیت ساتەکان بکەیتە کاتێکی خۆش بۆ هەمووان."
+        };
+
+        document.getElementById('quiz-box').style.display='none'; document.getElementById('result-box').style.display='block';
+        document.getElementById('res-code').innerText = type + suffix; document.getElementById('res-name').innerText = names[type];
+        document.getElementById('res-desc').innerText = descs[type];
+
+        document.getElementById('res-stats').innerHTML = [['E','I','وزە'],['S','N','وەرگرتن'],['T','F','بڕیار'],['J','P','ژیان']].map(p => `
+            <div style="margin-bottom:15px;">
+                <div style="display:flex; justify-content:space-between; font-weight:800; font-size:0.9rem;">
+                    <span style="color:var(--cyan)">${p[0]} ${r[p[0]]}%</span> <span>${p[2]}</span> <span style="color:var(--accent)">${r[p[1]]}% ${p[1]}</span>
+                </div>
+                <div class="bar-outer">
+                    <div style="width:${r[p[0]]}%; background:var(--cyan);"></div>
+                    <div style="width:${r[p[1]]}%; background:var(--accent);"></div>
+                </div>
+            </div>
+        `).join('');
+        window.scrollTo(0,0);
+    }
+</script>
+</body>
+</html>
